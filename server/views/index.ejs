@@ -1,0 +1,32 @@
+<% include partials/header.ejs %>
+<% include partials/main_nav.ejs %>
+
+<div class="container-fluid d-flex align-items-center justify-content-center" style="min-height: 100vh; background-color: #000; color: #fff;">
+    <div class="text-center border-white rounded p-5"> <!-- Changed class to 'rounded' for curved edges -->
+        <i class="fas fa-receipt fa-7x fa-bounce mb-5 text-white"></i> <!-- Changed icon to a receipt icon -->
+        <% if(displayName) { %>
+            <h1 class="mb-3">Welcome, <%= displayName %>!</h1>
+            <p class="lead mb-4">Track Your Expenses!</p>
+            <a href="/expense/expenseList" class="btn btn-primary btn-sm rounded-pill px-5 py-3" style="background-color: #fff; color: #000; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;">View Expenses</a>
+        <% } else { %>
+            <h1 class="mb-3">Welcome to Expense Tracker</h1>
+            <p class="lead mb-4">Track and Manage Your Expenses!</p>
+            <a href="/login" class="btn btn-outline-primary btn-sm rounded-pill px-5 py-3" style="border-color: #fff; color: #fff; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;">Log In</a>
+        <% } %>
+    </div>
+</div>
+
+<% include partials/bottom_nav.ejs %>
+<% include partials/footer.ejs %>
+
+<style>
+    .container-fluid {
+        font-family: 'Nova Square', sans-serif;
+    }
+    .border-white {
+        border: 2px solid #fff; /* white border */
+    }
+    .rounded {
+        border-radius: 20px; /* curved edges for the square */
+    }
+</style>

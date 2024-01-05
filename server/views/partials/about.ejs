@@ -1,0 +1,98 @@
+<%- include ../partials/header.ejs %>
+<%- include ../partials/main_nav.ejs %>
+
+        <div class="wrapper">
+            <div class="profile">
+                <div class="overlay">
+                    <div class="about d-flex flex-column">
+                        <h4>Purva Patel</h4> <span>Ontario Tech University</span>
+                    </div>
+                    <ul class="social-icons">
+                        <li><a href="https://github.com/Purvapatel4725" target="_blank"><i class="fa-brands fa-github"></i></a></li>
+                        <li><a href="https://www.linkedin.com/in/purva-patel-78a10121b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank"><i class="fa-brands fa-linkedin"></i></a></li>
+                        <li><a href="https://instagram.com/itz_purv?igshid=YTQwZjQ0NmI0OA==" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="https://open.spotify.com/playlist/0td66CGaFPZifs3Dg5s6Uc?si=26d5542f9826480a" target="_blank"><i class="fa-brands fa-spotify"></i></a></li>
+                    </ul>                    
+                </div>
+            </div>
+        </div>
+
+<%- include ../partials/bottom_nav.ejs %>
+<%- include ../partials/footer.ejs %>
+
+<style>
+    .wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #000
+    }
+
+    .profile {
+        position: relative;
+        width: 300px;
+        height: 350px;
+        background: url("Assets/Logo.jpg");
+        background-size: cover;
+        cursor: pointer;
+        border: 12px;
+        border-top-right-radius: 35px !important;
+        border-radius: 6px
+    }
+
+    .overlay {
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 12px;
+        cursor: pointer;
+        opacity: 0;
+        transition: all 1s;
+        border-top-right-radius: 35px !important;
+        border-radius: 6px
+    }
+
+    .profile:hover .overlay {
+        opacity: 1
+    }
+
+    .social-icons {
+        display: flex;
+        list-style: none;
+        bottom: 10px;
+        position: absolute;
+        text-align: center;
+        justify-content: center;
+        left: 22px
+    }
+
+    .social-icons li {
+        width: 25px;
+        height: 25px;
+        border: 1px solid #eee;
+        padding: 20px;
+        margin-right: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        border-radius: 5px;
+        transition: all 1s
+    }
+
+    .social-icons li:hover {
+        background: #fff;
+        color: #000
+    }
+
+    .overlay .about {
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        top: 40%;
+        color: #fff;
+        flex: column
+    }
+</style>

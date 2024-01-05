@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar" style="background-color: black;">
+  <div class="container-fluid text-center">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <% if(title=="Home" ) { %>
+            <a class="nav-link active hoverable" href="/">
+          <% } else { %>
+            <a class="nav-link hoverable" href="/">
+          <% } %>
+          <i class="fa-solid fa-house"></i> Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <% if(title=="Expense Tracker" ) { %>
+          <a class="nav-link active hoverable" href="/expenses/expenseList">
+          <% } else { %>
+          <a class="nav-link hoverable" href="/expense/expenseList">
+          <% } %>
+          <i class="fa-solid fa-receipt"></i> Expenses
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <% if(title=="About" ) { %>
+            <a class="nav-link active hoverable" href="/about">
+          <% } else { %>
+            <a class="nav-link hoverable" href="/about">
+          <% } %>
+          <i class="fa-solid fa-address-card"></i> About 
+          </a>
+        </li>
+
+        <% if(typeof displayName=='string' && displayName) { %>
+          <li class="nav-item">
+            <a href="/logout" class="nav-link hoverable"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+          </li>
+        <% } else { %>
+          <li class="nav-item">
+            <a href="/login" class="nav-link hoverable"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+    <ul class="navbar-nav ms-auto">
+      <li class="navbar-text">
+        <% if(typeof displayName=='string' && displayName) { %>
+          <i class="fa-regular fa-user fa-bounce"></i> <%= displayName %>
+        <% } %>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<style>
+  /* Your custom styles for the navbar */
+</style>
+
+<script>
+  // Your JavaScript for any additional functionality or interactions
+</script>

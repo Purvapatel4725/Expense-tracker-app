@@ -1,0 +1,46 @@
+<%- include ../partials/header.ejs %>
+<%- include ../partials/main_nav.ejs %>
+
+<main class="container pb-5" style="color: #fff;">
+    <div class="row">
+        <div class="offset-md-1 col-md-10 text-center">
+            <h1 class="text-center"><%= title %></h1>
+            <div class="card mt-5" style="background-color: #000; color: #fff;">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="text-center">Add New Expense</h3>
+                </div>
+                <div class="card-body mb-5">
+                    <form method="POST" action="/expense/addExpense">
+                        <div class="mb-4 position-relative">
+                            <label for="amount" class="form-label">Amount</label>
+                            <input type="number" class="form-control" id="amount" placeholder="Enter the amount" name="amount" required style="background-color: #333; color: #fff;">
+                        </div>
+                        <div class="mb-4 position-relative">
+                            <label for="category" class="form-label">Category</label>
+                            <input type="text" class="form-control" id="category" placeholder="Enter the category" name="category" required style="background-color: #333; color: #fff;">
+                        </div>
+                        <div class="mb-4 position-relative">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" placeholder="Enter description" name="description" required style="background-color: #333; color: #fff;"></textarea>
+                        </div>
+                        <div class="mb-4 position-relative">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" name="date" required style="background-color: #333; color: #fff;">
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-plus"></i> Add Expense
+                            </button>
+                            <a href="/expense/expenseList" class="btn btn-warning">
+                                <i class="fas fa-undo"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include ../partials/bottom_nav.ejs %>
+<%- include ../partials/footer.ejs %>

@@ -1,0 +1,62 @@
+<%- include ../partials/header.ejs %>
+<%- include ../partials/main_nav.ejs %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card mt-5" style="background-color: #000; color: #fff;">
+                <div class="card-header" style="background-color: #000; color: #fff;">
+                    <h1 class="text-center">
+                        Edit Expense
+                    </h1>
+                </div>
+                <div class="card-body mb-5" style="filter: grayscale(100%);">
+                    <form method="POST" action="/expense/editExpense/<%= expense._id %>">
+                        <div class="mb-4 position-relative">
+                            <label for="amountField" class="form-label" style="color: #fff;">Amount</label>
+                            <input type="number" class="form-control" id="amountField"
+                                placeholder="Enter the Amount" name="amount"
+                                value="<%= expense.amount %>" required
+                                style="background-color: #333; color: #fff;">
+                        </div>
+
+                        <div class="mb-4 position-relative">
+                            <label for="categoryField" class="form-label" style="color: #fff;">Category</label>
+                            <input type="text" class="form-control" id="categoryField"
+                                placeholder="Enter the Category" name="category"
+                                value="<%= expense.category %>" required
+                                style="background-color: #333; color: #fff;">
+                        </div>
+
+                        <div class="mb-4 position-relative">
+                            <label for="descriptionTextArea" class="form-label" style="color: #fff;">Description</label>
+                            <textarea class="form-control" id="descriptionTextArea"
+                                placeholder="Enter Description" name="description" required
+                                style="background-color: #333; color: #fff;"><%= expense.description %></textarea>
+                        </div>
+
+                        <div class="mb-4 position-relative">
+                            <label for="dateField" class="form-label" style="color: #fff;">Date</label>
+                            <input type="date" class="form-control" id="dateField" name="date"
+                                value="<%= expense.date.toISOString().slice(0, 10) %>" required
+                                style="background-color: #333; color: #fff;">
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-edit"></i> Update
+                            </button>
+
+                            <a href="/expense/expenseList" class="btn btn-warning">
+                                <i class="fas fa-undo"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include ../partials/bottom_nav.ejs %>
+<%- include ../partials/footer.ejs %>
