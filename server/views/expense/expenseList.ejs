@@ -91,20 +91,26 @@
     }
 
     function toggleDetails(collapseId) {
-        const collapseElem = document.getElementById(collapseId);
-        const showMore = collapseElem.previousElementSibling;
-        if (collapseElem.classList.contains('show')) {
-            collapseElem.classList.remove('show');
-            showMore.innerHTML = 'Show More <i class="fas fa-caret-down"></i>';
-        } else {
-            const allCollapses = document.querySelectorAll('.collapse.show');
-            allCollapses.forEach((collapse) => {
-                const moreLink = collapse.previousElementSibling;
-                moreLink.innerHTML = 'Show More <i class="fas fa-caret-down"></i>';
-                collapse.classList.remove('show');
-            });
-            collapseElem.classList.add('show');
-            showMore.innerHTML = 'Show Less <i class="fas fa-caret-up"></i>';
-        }
+    const collapseElem = document.getElementById(collapseId);
+    const showMore = collapseElem.previousElementSibling;
+    const showLess = collapseElem.querySelector('.show-less');
+
+    if (collapseElem.classList.contains('show')) {
+        collapseElem.classList.remove('show');
+        showMore.style.display = 'block'; // Show the "Show More" link
+        showLess.style.display = 'none'; // Hide the "Show Less" link
+    } else {
+        const allCollapses = document.querySelectorAll('.collapse.show');
+        allCollapses.forEach((collapse) => {
+            const moreLink = collapse.previousElementSibling;
+            const lessLink = collapse.querySelector('.show-less');
+            moreLink.style.display = 'block'; // Show the "Show More" link for other collapsed sections
+            lessLink.style.display = 'none'; // Hide the "Show Less" link for other collapsed sections
+            collapse.classList.remove('show');
+        });
+        collapseElem.classList.add('show');
+        showMore.style.display = 'none'; // Hide the "Show More" link
+        showLess.style.display = 'block'; // Show the "Show Less" link
     }
+}
 </script>
