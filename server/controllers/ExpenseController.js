@@ -39,7 +39,7 @@ module.exports.processExpense = async (req, res, next) => {
             "description": req.body.description,
             "date": req.body.date
         });
-        res.redirect('/expenses/expenseList');
+        res.redirect('/expense/expenseList');
     } catch (err) {
         console.error(err);
         res.render('error', {

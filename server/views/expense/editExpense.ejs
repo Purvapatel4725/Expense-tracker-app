@@ -22,11 +22,19 @@
 
                         <div class="mb-4 position-relative">
                             <label for="categoryField" class="form-label" style="color: #fff;">Category</label>
-                            <input type="text" class="form-control" id="categoryField"
-                                placeholder="Enter the Category" name="category"
-                                value="<%= expense.category %>" required
-                                style="background-color: #333; color: #fff;">
+                            <select class="form-select" id="categoryField" name="category" required style="background-color: #333; color: #fff;">
+                                <option value="" selected disabled>Select a category</option>
+                                <option value="Rent" <%= expense.category === 'Rent' ? 'selected' : '' %>>Rent</option>
+                                <option value="Food" <%= expense.category === 'Food' ? 'selected' : '' %>>Food</option>
+                                <option value="Utilities" <%= expense.category === 'Utilities' ? 'selected' : '' %>>Utilities</option>
+                                <option value="Payroll" <%= expense.category === 'Payroll' ? 'selected' : '' %>>Payroll</option>
+                                <option value="Entertainment" <%= expense.category === 'Entertainment' ? 'selected' : '' %>>Entertainment</option>
+                                <option value="Insurance" <%= expense.category === 'Insurance' ? 'selected' : '' %>>Insurance</option>
+                                <option value="Communications" <%= expense.category === 'Communications' ? 'selected' : '' %>>Communications</option>
+                                <option value="Other" <%= expense.category === 'Other' ? 'selected' : '' %>>Other</option>
+                            </select>
                         </div>
+                        
 
                         <div class="mb-4 position-relative">
                             <label for="descriptionTextArea" class="form-label" style="color: #fff;">Description</label>

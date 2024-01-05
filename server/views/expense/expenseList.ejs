@@ -37,11 +37,14 @@
                         </div>
                         <div class="card-body">
                             <div onclick="toggleDetails('collapseDescription<%= count %>')" style="cursor: pointer;">
-                                Show More <i class="fas fa-caret-down"></i>
+                                <span>Show More <i class="fas fa-caret-down"></i></span>
                             </div>
                             <div class="collapse" id="collapseDescription<%= count %>">
                                 <p class="card-text"><strong>Date:</strong> <%= expenses[count].date.toDateString() %></p>
                                 <p class="card-text"><strong>Description:</strong> <%= expenses[count].description %></p>
+                                <div onclick="toggleDetails('collapseDescription<%= count %>')" style="cursor: pointer;" class="mt-2">
+                                    <span>Show Less <i class="fas fa-caret-up"></i></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -83,20 +86,25 @@
 <script>
     function confirmDeleteExpense(expenseId) {
         if (confirm("Are you sure you want to delete this expense?")) {
-            window.location.href = "/expenses/deleteExpense/" + expenseId;
+            window.location.href = "/expense/deleteExpense/" + expenseId;
         }
     }
 
     function toggleDetails(collapseId) {
         const collapseElem = document.getElementById(collapseId);
+        const showMore = collapseElem.previousElementSibling;
         if (collapseElem.classList.contains('show')) {
             collapseElem.classList.remove('show');
+            showMore.innerHTML = 'Show More <i class="fas fa-caret-down"></i>';
         } else {
             const allCollapses = document.querySelectorAll('.collapse.show');
             allCollapses.forEach((collapse) => {
+                const moreLink = collapse.previousElementSibling;
+                moreLink.innerHTML = 'Show More <i class="fas fa-caret-down"></i>';
                 collapse.classList.remove('show');
             });
             collapseElem.classList.add('show');
+            showMore.innerHTML = 'Show Less <i class="fas fa-caret-up"></i>';
         }
     }
 </script>
