@@ -6,7 +6,7 @@ module.exports.displayExpenseList = async (req, res, next) => {
         const expenseList = await Expense.find();
         res.render('expense/expenseList', {
             title: 'Expense List',
-            expense: expenseList,
+            expenses: expenseList,
             displayName: req.user ? req.user.displayName : ''
         });
     } catch (err) {
@@ -95,3 +95,4 @@ module.exports.deleteExpense = async (req, res, next) => {
         });
     }
 };
+

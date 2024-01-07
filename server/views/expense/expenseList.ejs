@@ -1,54 +1,65 @@
 <%- include ../partials/header.ejs %>
 <%- include ../partials/main_nav.ejs %>
 
-<main class="container pb-5" style="color: #fff;">
+<main class="container pb-5">
     <div class="row">
         <div class="offset-md-1 col-md-10 text-center">
-            <h1 class="animated-heading" style="margin-top: 30px; color: #000;">Expense Tracker</h1>
-            <div class="mb-4"></div>
-
-            <% if(typeof displayName === 'string' && displayName) { %>
-            <div class="text-center mt-4">
-                <a href="/expense/addExpense" class="btn btn-outline-light btn-lg rounded-pill"
-                    role="button" style="background-color: black; border-color: black; transition: all 0.3s ease-in-out;">
-                    <i class="fas fa-plus-circle" style="margin-right: 10px; color: #fff;"></i> Add Expense
-                </a>
-            </div>
+            <h1 class="animated-heading mt-5">Expense Tracker</h1>
+            <% if (typeof displayName === 'string' && displayName) { %>
+                <div class="text-center mt-4">
+                    <a href="/expense/addExpense" class="btn btn-dark btn-lg rounded-pill">
+                        <i class="fas fa-plus-circle me-2"></i> Add Expense
+                    </a>
+                </div>
             <% } %>
 
-            <div class="row">
-                <% for(let count=0; count < expenses.length; count++) { %>
-                <div class="col-md-6 mt-5">
-                    <div class="card mb-4" style="background-color: #000; color: #fff;">
-                        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                            <h5 class="card-title" style="font-weight: 700;"><%= expenses[count].category %>:</h5>
-                            <p class="card-text">$<%= expenses[count].amount.toFixed(2) %></p>
-                            <div class="text-right mb-2">
-                                <% if(typeof displayName === 'string' && displayName) { %>
-                                <a href="/expense/editExpense/<%= expenses[count]._id %>" class="btn btn-info btn-sm">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <button class="btn btn-danger btn-sm ml-2"
-                                    onclick="confirmDeleteExpense('<%= expenses[count]._id %>')">
-                                    <i class="fas fa-trash-alt"></i> 
-                                </button>
-                                <% } %>
+            <% let monthlyTotal = {} %>
+            <% expenses.forEach((expense) => { %>
+                <% let expenseMonth = expense.date.getMonth() + 1 %> <!-- Get month (1-12) -->
+                <% let expenseYear = expense.date.getFullYear() %> <!-- Get year -->
+                <% let formattedMonthYear = new Date(expenseYear, expenseMonth - 1, 1).toLocaleString('default', { month: 'long', year: 'numeric' }) %> <!-- Get month name and year -->
+                <% if (!monthlyTotal[formattedMonthYear]) { monthlyTotal[formattedMonthYear] = 0 } %>
+                <% monthlyTotal[formattedMonthYear] += expense.amount %>
+            <% }) %>
+
+            <div class="mt-5">
+                <h2>Monthly Expenses</h2>
+                <% Object.keys(monthlyTotal).forEach((monthYear) => { %>
+                    <p><strong><%= monthYear %>:</strong> $<%= monthlyTotal[monthYear].toFixed(2) %></p>
+                <% }) %>
+            </div>
+
+            <div class="row mt-5">
+                <% for (let count = 0; count < expenses.length; count++) { %>
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-body d-flex justify-content-between align-items-start">
+                                <div class="d-flex align-items-center">
+                                    <h5 class="card-title mb-0 me-3"><%= expenses[count].category %>:</h5>
+                                    <p class="card-text mb-0">$<%= expenses[count].amount.toFixed(2) %></p>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <a href="/expense/editExpense/<%= expenses[count]._id %>" class="me-2 text-primary">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <button onclick="confirmDeleteExpense('<%= expenses[count]._id %>')" class="btn btn-link p-0 text-danger">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <div onclick="toggleDetails('collapseDescription<%= count %>')" style="cursor: pointer;">
+                            <!-- Additional card content -->
+                            <div onclick="toggleDetails('collapseDescription<%= count %>')" class="text-muted mb-3 cursor-pointer">
                                 <span>Show More <i class="fas fa-caret-down"></i></span>
                             </div>
                             <div class="collapse" id="collapseDescription<%= count %>">
                                 <p class="card-text"><strong>Date:</strong> <%= expenses[count].date.toDateString() %></p>
                                 <p class="card-text"><strong>Description:</strong> <%= expenses[count].description %></p>
-                                <div onclick="toggleDetails('collapseDescription<%= count %>')" style="cursor: pointer;" class="mt-2">
+                                <div onclick="toggleDetails('collapseDescription<%= count %>')" class="mt-2 text-muted cursor-pointer">
                                     <span>Show Less <i class="fas fa-caret-up"></i></span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 <% } %>
             </div>
         </div>
@@ -59,26 +70,18 @@
 <%- include ../partials/footer.ejs %>
 
 <style>
-    .btn {
-        font-family: 'Nova Square', sans-serif;
-    }
-
-    .collapse {
-        display: none;
-    }
-
-    .collapse.show {
-        display: block;
-    }
-
     .card {
         border: none;
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #f8f9fa;
     }
 
-    .card-header {
-        border-radius: 10px;
+    .card-body {
+        padding: 20px;
+    }
+
+    .cursor-pointer {
         cursor: pointer;
     }
 </style>
@@ -91,26 +94,26 @@
     }
 
     function toggleDetails(collapseId) {
-    const collapseElem = document.getElementById(collapseId);
-    const showMore = collapseElem.previousElementSibling;
-    const showLess = collapseElem.querySelector('.show-less');
+        const collapseElem = document.getElementById(collapseId);
+        const showMore = collapseElem.previousElementSibling;
+        const showLess = collapseElem.querySelector('.cursor-pointer:nth-child(4)');
 
-    if (collapseElem.classList.contains('show')) {
-        collapseElem.classList.remove('show');
-        showMore.style.display = 'block'; // Show the "Show More" link
-        showLess.style.display = 'none'; // Hide the "Show Less" link
-    } else {
-        const allCollapses = document.querySelectorAll('.collapse.show');
-        allCollapses.forEach((collapse) => {
-            const moreLink = collapse.previousElementSibling;
-            const lessLink = collapse.querySelector('.show-less');
-            moreLink.style.display = 'block'; // Show the "Show More" link for other collapsed sections
-            lessLink.style.display = 'none'; // Hide the "Show Less" link for other collapsed sections
-            collapse.classList.remove('show');
-        });
-        collapseElem.classList.add('show');
-        showMore.style.display = 'none'; // Hide the "Show More" link
-        showLess.style.display = 'block'; // Show the "Show Less" link
+        if (collapseElem.classList.contains('show')) {
+            collapseElem.classList.remove('show');
+            showMore.style.display = 'block';
+            showLess.style.display = 'none';
+        } else {
+            const allCollapses = document.querySelectorAll('.collapse.show');
+            allCollapses.forEach((collapse) => {
+                const moreLink = collapse.previousElementSibling;
+                const lessLink = collapse.querySelector('.cursor-pointer:nth-child(4)');
+                moreLink.style.display = 'block';
+                lessLink.style.display = 'none';
+                collapse.classList.remove('show');
+            });
+            collapseElem.classList.add('show');
+            showMore.style.display = 'none';
+            showLess.style.display = 'block';
+        }
     }
-}
 </script>
