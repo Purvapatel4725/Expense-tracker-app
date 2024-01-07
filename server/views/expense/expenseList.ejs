@@ -96,15 +96,20 @@
     }
 
     function toggleDetails(collapseId) {
-        const collapseElem = document.getElementById(collapseId);
-        if (collapseElem.classList.contains('show')) {
-            collapseElem.classList.remove('show');
-        } else {
-            const allCollapses = document.querySelectorAll('.collapse.show');
-            allCollapses.forEach((collapse) => {
+    const collapseElem = document.getElementById(collapseId);
+    const isCollapsed = collapseElem.classList.contains('show');
+    const allCollapses = document.querySelectorAll('.collapse.show');
+
+    if (isCollapsed) {
+        collapseElem.classList.remove('show');
+    } else {
+        allCollapses.forEach((collapse) => {
+            if (collapse !== collapseElem) {
                 collapse.classList.remove('show');
-            });
-            collapseElem.classList.add('show');
-        }
+            }
+        });
+        collapseElem.classList.add('show');
     }
+}
+
 </script>
