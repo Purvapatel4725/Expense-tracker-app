@@ -40,21 +40,23 @@
                                 </div>
                                 <div class="d-flex align-items-center">
                                     <a href="/expense/editExpense/<%= expenses[count]._id %>" class="me-2 text-primary">
-                                        <i class="fas fa-edit"></i>
+                                        <i class="fas fa-edit" style="color: black;"></i>
                                     </a>
                                     <button onclick="confirmDeleteExpense('<%= expenses[count]._id %>')" class="btn btn-link p-0 text-danger">
-                                        <i class="fas fa-trash-alt"></i>
+                                        <i class="fas fa-trash-alt" style="color: black;"></i>
                                     </button>
                                 </div>
                             </div>
                             <!-- Additional card content -->
-                            <div onclick="toggleDetails('collapseDescription<%= count %>')" class="text-muted mb-3 cursor-pointer">
-                                <span>Show More <i class="fas fa-caret-down"></i></span>
+                            <div class="text-muted mb-3 cursor-pointer">
+                                <span onclick="toggleDetails('collapseDescription<%= count %>')">Show More <i class="fas fa-caret-down"></i></span>
                             </div>
                             <div class="collapse" id="collapseDescription<%= count %>">
-                                <p class="card-text"><strong>Date:</strong> <%= expenses[count].date.toDateString() %></p>
-                                <p class="card-text"><strong>Description:</strong> <%= expenses[count].description %></p>
-                                <div onclick="toggleDetails('collapseDescription<%= count %>')" class="mt-2 text-muted cursor-pointer">
+                                <div class="p-3">
+                                    <p class="card-text"><strong>Date:</strong> <%= expenses[count].date.toDateString() %></p>
+                                    <p class="card-text"><strong>Description:</strong> <%= expenses[count].description %></p>
+                                </div>
+                                <div onclick="toggleDetails('collapseDescription<%= count %>')" class="text-muted cursor-pointer mt-2">
                                     <span>Show Less <i class="fas fa-caret-up"></i></span>
                                 </div>
                             </div>
@@ -95,25 +97,14 @@
 
     function toggleDetails(collapseId) {
         const collapseElem = document.getElementById(collapseId);
-        const showMore = collapseElem.previousElementSibling;
-        const showLess = collapseElem.querySelector('.cursor-pointer:nth-child(4)');
-
         if (collapseElem.classList.contains('show')) {
             collapseElem.classList.remove('show');
-            showMore.style.display = 'block';
-            showLess.style.display = 'none';
         } else {
             const allCollapses = document.querySelectorAll('.collapse.show');
             allCollapses.forEach((collapse) => {
-                const moreLink = collapse.previousElementSibling;
-                const lessLink = collapse.querySelector('.cursor-pointer:nth-child(4)');
-                moreLink.style.display = 'block';
-                lessLink.style.display = 'none';
                 collapse.classList.remove('show');
             });
             collapseElem.classList.add('show');
-            showMore.style.display = 'none';
-            showLess.style.display = 'block';
         }
     }
 </script>
