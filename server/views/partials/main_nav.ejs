@@ -58,8 +58,87 @@
 
 <style>
   /* Your custom styles for the navbar */
+  .navbar {
+    text-align: center !important;
+    float: none;
+    display: inline-block;
+    background-color: #008080; /* Background color for the navbar */
+    color: aqua; /* Text color for the navbar */
+    width: 100%; /* Spanning full width */
+  }
+
+  .navbar li {
+    margin-left: 3em;
+    margin-right: 3em;
+    display: inline-block; /* Center the content */
+  }
+
+  .navbar a {
+    transition: .5s color ease-in-out;
+    display: inline-block;
+    backface-visibility: hidden;
+    vertical-align: middle;
+    position: relative;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    transform: translateZ(0);
+    transition-duration: .3s;
+    transition-property: transform;
+    color: white;
+  }
+
+  .navbar a:before {
+    position: absolute;
+    pointer-events: none;
+    z-index: -1;
+    content: '';
+    top: 100%;
+    left: 5%;
+    height: 10px;
+    width: 90%;
+    opacity: 0;
+    /*background: -webkit-radial-gradient(center, ellipse, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 80%); {If you want that line use this}
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 80%); {If you want that line use this}*/ 
+    background: -webkit-radial-gradient(center, ellipse, white);
+    background: radial-gradient(ellipse at center, white);
+    transition-duration: 0.3s;
+    transition-property: transform, opacity;
+  }
+
+  .navbar a:hover,
+  .navbar a:active,
+  .navbar a:focus {
+    transform: translateY(-5px);
+  }
+
+  .navbar a:hover:before,
+  .navbar a:active:before,
+  .navbar a:focus:before {
+    opacity: 1;
+    transform: translateY(-5px);
+  }
+  .nav-item, .navbar-nav{
+    font-family: 'Nova Square', sans-serif;
+  }
+  .navbar-toggler .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%230f4c75' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+      background-color: transparent;
+      width: 30px; /* Adjust icon width */
+      height: 30px; /* Adjust icon height */
+  }
 </style>
 
 <script>
   // Your JavaScript for any additional functionality or interactions
+  document.addEventListener('DOMContentLoaded', function() {
+    const navbarToggler = document.querySelector('.navbar-toggler');
+    const welcomeText = document.querySelector('.navbar-text');
+
+    navbarToggler.addEventListener('click', function() {
+      if (welcomeText.style.display === 'none') {
+        welcomeText.style.display = 'block';
+      } else {
+        welcomeText.style.display = 'none';
+      }
+    });
+  });
 </script>

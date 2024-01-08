@@ -2,14 +2,13 @@
 <%- include ../partials/main_nav.ejs %>
 
 <main class="container pb-5">
-    <div class="row">
-        <div class="offset-md-2 col-md-8 text-center">
-            <h1 class="text-center mt-5">Expense Tracker</h1>
-            <div class="card mt-5" style="background-color: #202020; color: #fff;">
-                <div class="card-header bg-dark text-white">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card mt-5 mb-5" style="background-color: #f8f9fa; color: #000; border-radius: 15px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);">
+                <div class="card-header bg-dark text-white" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
                     <h3 class="text-center">Add New Expense</h3>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
                     <form method="POST" action="/expense/addExpense">
                         <div class="mb-3">
                             <label for="amount" class="form-label">Amount</label>
@@ -34,14 +33,16 @@
                         </div>
                         <div class="mb-3">
                             <label for="date" class="form-label">Date</label>
-                            <input type="date" class="form-control" id="date" name="date" required>
+                            <% const currentDate = new Date(); %>
+                            <% const etDate = new Date(currentDate.toLocaleString("en-US", {timeZone: "America/New_York"})); %>
+                            <input type="date" class="form-control" id="date" name="date" required value="<%= etDate.toISOString().slice(0, 10) %>">
                         </div>
                         <div class="d-grid gap-2">
-                            <button class="btn btn-primary" type="submit">
-                                <i class="fas fa-plus me-2"></i> Add Expense
+                            <button class="btn btn-primary" type="submit" style="background-color: black; border-color: black;">
+                                <i class="fas fa-plus me-2"></i> Add 
                             </button>
-                            <a href="/expense/expenseList" class="btn btn-warning">
-                                <i class="fas fa-undo me-2"></i> Cancel
+                            <a href="/expense/expenseList" class="btn btn-warning" style="background-color: black; border-color: black; color: white;">
+                                <i class="fas fa-undo me-2" style="color: white;"></i> Cancel
                             </a>
                         </div>
                     </form>
