@@ -28,9 +28,12 @@
                                 <option value="Other">Other</option>
                             </select>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 position-relative">
                             <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" id="description" placeholder="Enter description" name="description"></textarea>
+                            <input type="text" class="form-control" id="description" placeholder="Enter description" name="description" maxlength="60">
+                            <div class="position-absolute bottom-0 end-0 text-muted" style="font-size: 0.85em;">
+                                <span id="charCount">0/60</span>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="date" class="form-label">Date</label>
@@ -55,3 +58,12 @@
 
 <%- include ../partials/bottom_nav.ejs %>
 <%- include ../partials/footer.ejs %>
+<script>
+    const descriptionField = document.getElementById('description');
+    const charCount = document.getElementById('charCount');
+
+    descriptionField.addEventListener('input', function() {
+        const currentLength = this.value.length;
+        charCount.textContent = `${currentLength}/60`;
+    });
+</script>

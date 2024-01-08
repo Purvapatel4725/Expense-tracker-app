@@ -31,10 +31,12 @@
                             </select>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="descriptionTextArea" class="form-label">Description</label>
-                            <textarea class="form-control" id="descriptionTextArea"
-                                placeholder="Enter Description" name="description"><%= expense.description %></textarea>
+                        <div class="mb-3 position-relative">
+                            <label for="descriptionInput" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="descriptionInput" placeholder="Enter Description" name="description" maxlength="60" value="<%= expense.description %>">
+                            <div class="position-absolute bottom-0 end-0 text-muted" style="font-size: 0.85em;">
+                                <span id="charCountInput"><%= expense.description ? expense.description.length : 0 %>/60</span>
+                            </div>
                         </div>
 
                         <div class="mb-3">
@@ -61,3 +63,14 @@
 
 <%- include ../partials/bottom_nav.ejs %>
 <%- include ../partials/footer.ejs %>
+
+
+<script>
+    const descriptionInput = document.getElementById('descriptionInput');
+    const charCountInput = document.getElementById('charCountInput');
+
+    descriptionInput.addEventListener('input', function() {
+        const currentLength = this.value.length;
+        charCountInput.textContent = `${currentLength}/60`;
+    });
+</script>
