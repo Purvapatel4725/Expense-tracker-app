@@ -30,9 +30,10 @@
                     <div class="card mb-3">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <h5 class="card-title"><strong><%= monthYear %>:</strong> $<%= monthlyTotal[monthYear].total.toFixed(2) %></h5>
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#categoryModal<%= monthYear.replace(' ', '') %>">
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#categoryModal<%= monthYear.replace(' ', '') %>" style="background-color: black;">
                                 <i class="fa-solid fa-expand"></i>
                             </button>
+                            
                         </div>
                         <!-- Modal -->
                         <div class="modal fade" id="categoryModal<%= monthYear.replace(' ', '') %>" tabindex="-1" aria-labelledby="categoryModalLabel<%= monthYear.replace(' ', '') %>" aria-hidden="true">
@@ -53,9 +54,6 @@
                     </div>
                 <% }) %>
             </div>
-            
-            
-            
 
             <div class="row mt-5 mb-4">
                 <% for (let count = 0; count < expenses.length; count++) { %>
