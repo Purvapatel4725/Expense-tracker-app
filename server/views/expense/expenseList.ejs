@@ -18,16 +18,44 @@
                 <% let expenseMonth = expense.date.getMonth() + 1 %> <!-- Get month (1-12) -->
                 <% let expenseYear = expense.date.getFullYear() %> <!-- Get year -->
                 <% let formattedMonthYear = new Date(expenseYear, expenseMonth - 1, 1).toLocaleString('default', { month: 'long', year: 'numeric' }) %> <!-- Get month name and year -->
-                <% if (!monthlyTotal[formattedMonthYear]) { monthlyTotal[formattedMonthYear] = 0 } %>
-                <% monthlyTotal[formattedMonthYear] += expense.amount %>
+                <% if (!monthlyTotal[formattedMonthYear]) { monthlyTotal[formattedMonthYear] = { total: 0, categories: {} } } %>
+                <% monthlyTotal[formattedMonthYear].total += expense.amount %>
+                <% if (!monthlyTotal[formattedMonthYear].categories[expense.category]) { monthlyTotal[formattedMonthYear].categories[expense.category] = 0 } %>
+                <% monthlyTotal[formattedMonthYear].categories[expense.category] += expense.amount %>
             <% }) %>
 
             <div class="mt-5">
-                <h2>Monthly Expenses</h2>
+                <h2 class="text-center mb-4">Monthly Expenses</h2>
                 <% Object.keys(monthlyTotal).forEach((monthYear) => { %>
-                    <p><strong><%= monthYear %>:</strong> $<%= monthlyTotal[monthYear].toFixed(2) %></p>
+                    <div class="card mb-3">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <h5 class="card-title"><strong><%= monthYear %>:</strong> $<%= monthlyTotal[monthYear].total.toFixed(2) %></h5>
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#categoryModal<%= monthYear.replace(' ', '') %>">
+                                <i class="fa-solid fa-expand"></i>
+                            </button>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="categoryModal<%= monthYear.replace(' ', '') %>" tabindex="-1" aria-labelledby="categoryModalLabel<%= monthYear.replace(' ', '') %>" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="categoryModalLabel<%= monthYear.replace(' ', '') %>"><%= monthYear %></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-start">
+                                        <% Object.keys(monthlyTotal[monthYear].categories).forEach((category) => { %>
+                                            <p><strong><%= category %>:</strong> $<%= monthlyTotal[monthYear].categories[category].toFixed(2) %></p>
+                                        <% }) %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <% }) %>
             </div>
+            
+            
+            
 
             <div class="row mt-5 mb-4">
                 <% for (let count = 0; count < expenses.length; count++) { %>
