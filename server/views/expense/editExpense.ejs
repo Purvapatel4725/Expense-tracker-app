@@ -12,9 +12,9 @@
                     <form method="POST" action="/expense/editExpense/<%= expense._id %>">
                         <div class="mb-3">
                             <label for="amountField" class="form-label">Amount</label>
-                            <input type="number" class="form-control" id="amountField"
+                            <input type="text" class="form-control" id="amountField"
                                 placeholder="Enter the Amount" name="amount"
-                                value="<%= expense.amount %>" required>
+                                value="<%= expense.amount %>" required pattern="[0-9]+(\.[0-9]{1,2})?">
                         </div>
 
                         <div class="mb-3">
@@ -34,7 +34,7 @@
                         <div class="mb-3">
                             <label for="descriptionTextArea" class="form-label">Description</label>
                             <textarea class="form-control" id="descriptionTextArea"
-                                placeholder="Enter Description" name="description" required><%= expense.description %></textarea>
+                                placeholder="Enter Description" name="description"><%= expense.description %></textarea>
                         </div>
 
                         <div class="mb-3">

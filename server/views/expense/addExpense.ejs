@@ -12,7 +12,8 @@
                     <form method="POST" action="/expense/addExpense">
                         <div class="mb-3">
                             <label for="amount" class="form-label">Amount</label>
-                            <input type="number" class="form-control" id="amount" placeholder="Enter the amount" name="amount" required>
+                            <input type="text" class="form-control" id="amount" placeholder="Enter the amount" name="amount" required pattern="[0-9]+(\.[0-9]{1,2})?">
+                            <!-- The pattern attribute allows numbers with optional two decimal places -->
                         </div>
                         <div class="mb-3">
                             <label for="category" class="form-label">Category</label>
@@ -29,7 +30,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" id="description" placeholder="Enter description" name="description" required></textarea>
+                            <textarea class="form-control" id="description" placeholder="Enter description" name="description"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="date" class="form-label">Date</label>
