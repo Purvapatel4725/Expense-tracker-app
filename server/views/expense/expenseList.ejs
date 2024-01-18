@@ -13,6 +13,24 @@
                 </div>
             <% } %>
 
+            <div class="mt-5">
+                <!-- Modal for the graph -->
+                <div class="modal fade" id="overviewModal" tabindex="-1" aria-labelledby="overviewModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="overviewModalLabel">Compare your monthly expense</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <canvas id="overviewChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+
             <% let monthlyTotal = {} %>
             <% expenses.forEach((expense) => { %>
                 <% let expenseMonth = expense.date.getMonth() + 1 %> <!-- Get month (1-12) -->
@@ -25,7 +43,12 @@
             <% }) %>
 
             <div class="mt-5">
-                <h2 class="text-center mb-4">Monthly Expenses</h2>
+                <h2 class="text-center mb-4">Overview</h2>
+                <div class="mt-4 text-center">
+                    <button class="btn btn-dark btn-lg rounded-pill mb-3" data-bs-toggle="modal" data-bs-target="#overviewModal">
+                        <i class="fas fa-chart-bar me-2"></i> View Graph
+                    </button>
+                </div>
                 <% Object.keys(monthlyTotal).sort((a, b) => new Date(b) - new Date(a)).forEach((monthYear) => { %>
                     <!-- Sorting based on date (descending order) -->
                     <div class="card mb-3">
@@ -55,6 +78,7 @@
                 <% }) %>
             </div>
 
+            <h2 class="text-center  mt-5">Expenses</h2>
 
             <div class="row mt-5 mb-4">
                 <% for (let count = 0; count < expenses.length; count++) { %>
@@ -136,4 +160,90 @@
             showMoreBtn.style.display = 'none';
         }
     }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get data for the chart
+        const chartData = {
+            labels: [],
+            datasets: [{
+                label: 'Total Expenses',
+                data: [],
+                backgroundColor: 'rgba(0, 0, 0, 0.7)', // Solid black color
+                borderColor: 'rgba(0, 0, 0, 1)',
+                borderWidth: 2,
+                hoverBackgroundColor: 'rgba(0, 0, 0, 0.8)', // Darker black on hover
+                hoverBorderColor: 'rgba(0, 0, 0, 1)',
+            }]
+        };
+
+        // Extract data for the chart
+        <% Object.keys(monthlyTotal).sort((a, b) => new Date(b) - new Date(a)).forEach((monthYear) => { %>
+            chartData.labels.push('<%= monthYear %>');
+            chartData.datasets[0].data.push(<%= monthlyTotal[monthYear].total.toFixed(2) %>);
+        <% }) %>
+
+        // Create the chart
+        const ctx = document.getElementById('overviewChart').getContext('2d');
+        const overviewChart = new Chart(ctx, {
+            type: 'bar',
+            data: chartData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value, index, values) {
+                                return '$' + value;
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            return '$' + tooltipItem.yLabel.toFixed(2);
+                        }
+                    }
+                },
+                hover: {
+                    onHover: function (event, elements) {
+                        event.target.style.cursor = elements[0] ? 'pointer' : 'default';
+                    }
+                }
+            }
+        });
+
+        // Add a button to toggle other months
+        const toggleButton = document.getElementById('toggleButton');
+        toggleButton.addEventListener('click', function () {
+            const newLabels = [];
+            const newData = [];
+
+            <% Object.keys(monthlyTotal).sort((a, b) => new Date(b) - new Date(a)).forEach((monthYear, index) => { %>
+                if (index >= 4) {
+                    newLabels.push('<%= monthYear %>');
+                    newData.push(<%= monthlyTotal[monthYear].total.toFixed(2) %>);
+                }
+            <% }) %>
+
+            overviewChart.data.labels = newLabels;
+            overviewChart.data.datasets[0].data = newData;
+            overviewChart.update();
+        });
+    });
 </script>
